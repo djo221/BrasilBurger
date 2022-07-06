@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\PortionFriteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PortionFriteRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PortionFriteRepository::class)]
 #[ApiResource(
@@ -15,36 +16,46 @@ use Doctrine\ORM\Mapping as ORM;
 )]
 class PortionFrite extends Produit
 {
-    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'portions')]
-    private $menus;
+
+
+    #[ORM\OneToMany(mappedBy: 'portion', targetEntity: MenuPortion::class)]
+    private $menuPortions;
 
     public function __construct()
     {
-        $this->menus = new ArrayCollection();
+        $this->menuTailles = new ArrayCollection();
+        $this->menuPortions = new ArrayCollection();
     }
+
+  
+
+    
 
     /**
-     * @return Collection<int, Menu>
+     * @return Collection<int, MenuPortion>
      */
-    public function getMenus(): Collection
+    public function getMenuPortions(): Collection
     {
-        return $this->menus;
+        return $this->menuPortions;
     }
 
-    public function addMenu(Menu $menu): self
+    public function addMenuPortion(MenuPortion $menuPortion): self
     {
-        if (!$this->menus->contains($menu)) {
-            $this->menus[] = $menu;
-            $menu->addPortion($this);
+        if (!$this->menuPortions->contains($menuPortion)) {
+            $this->menuPortions[] = $menuPortion;
+            $menuPortion->setPortion($this);
         }
 
         return $this;
     }
 
-    public function removeMenu(Menu $menu): self
+    public function removeMenuPortion(MenuPortion $menuPortion): self
     {
-        if ($this->menus->removeElement($menu)) {
-            $menu->removePortion($this);
+        if ($this->menuPortions->removeElement($menuPortion)) {
+            // set the owning side to null (unless already changed)
+            if ($menuPortion->getPortion() === $this) {
+                $menuPortion->setPortion(null);
+            }
         }
 
         return $this;

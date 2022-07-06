@@ -10,43 +10,51 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BoissonRepository::class)]
 #[ApiResource(
+    attributes:["pagination_items_per_page" => 3],
     collectionOperations:["get","post"],
     itemOperations:["put","get", "patch"]
 )]
 class Boisson extends Produit
 {
-    #[ORM\ManyToMany(targetEntity: Taille::class, mappedBy: 'boissons')]
-    private $tailles;
+
+
+    #[ORM\OneToMany(mappedBy: 'boisson', targetEntity: TailleBoisson::class)]
+    private $tailleBoissons;
 
     public function __construct()
     {
-        $this->tailles = new ArrayCollection();
+        $this->tailleBoissons = new ArrayCollection();
     }
 
     /**
-     * @return Collection<int, Taille>
+     * @return Collection<int, TailleBoisson>
      */
-    public function getTailles(): Collection
+    public function getTailleBoissons(): Collection
     {
-        return $this->tailles;
+        return $this->tailleBoissons;
     }
 
-    public function addTaille(Taille $taille): self
+    public function addTailleBoisson(TailleBoisson $tailleBoisson): self
     {
-        if (!$this->tailles->contains($taille)) {
-            $this->tailles[] = $taille;
-            $taille->addBoisson($this);
+        if (!$this->tailleBoissons->contains($tailleBoisson)) {
+            $this->tailleBoissons[] = $tailleBoisson;
+            $tailleBoisson->setBoisson($this);
         }
 
         return $this;
     }
 
-    public function removeTaille(Taille $taille): self
+    public function removeTailleBoisson(TailleBoisson $tailleBoisson): self
     {
-        if ($this->tailles->removeElement($taille)) {
-            $taille->removeBoisson($this);
+        if ($this->tailleBoissons->removeElement($tailleBoisson)) {
+            // set the owning side to null (unless already changed)
+            if ($tailleBoisson->getBoisson() === $this) {
+                $tailleBoisson->setBoisson(null);
+            }
         }
 
         return $this;
     }
+
+    
 }

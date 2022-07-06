@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BurgerRepository;
-use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BurgerRepository::class)]
@@ -18,15 +18,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'status' => Response::HTTP_OK,
             'normalization_context' => ['groups' => ['burger:read:simple']],
         ],
-        "post"=>[
+        "post" => [
             'denormalization_context' => ['groups' => ['write']]
         ]
     ],
     itemOperations: [
         "get" => [
-        
+
             'normalization_context' => ['groups' => ['burger:read:all']],
-        ], 
+        ],
         "put" => [
             "security" => "is_granted('ROLE_GESTIONNAIRE')",
             "security_message" => "Vous n'avez pas access à cette Ressource",
@@ -41,15 +41,13 @@ class Burger extends Produit
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'burgers')]
     private $user;
 
-
-    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'burgers')]
-    private $menus;
+    #[ORM\OneToMany(mappedBy: 'burger', targetEntity: MenuBurger::class)]
+    private $menuBurgers;
 
     public function __construct()
     {
-        $this->menus = new ArrayCollection();
+        $this->menuBurgers = new ArrayCollection();
     }
-
 
     public function getUser(): ?User
     {
@@ -63,30 +61,31 @@ class Burger extends Produit
         return $this;
     }
 
-
-
     /**
-     * @return Collection<int, Menu>
+     * @return Collection<int, MenuBurger>
      */
-    public function getMenus(): Collection
+    public function getMenuBurgers(): Collection
     {
-        return $this->menus;
+        return $this->menuBurgers;
     }
 
-    public function addMenu(Menu $menu): self
+    public function addMenuBurger(MenuBurger $menuBurger): self
     {
-        if (!$this->menus->contains($menu)) {
-            $this->menus[] = $menu;
-            $menu->addBurger($this);
+        if (!$this->menuBurgers->contains($menuBurger)) {
+            $this->menuBurgers[] = $menuBurger;
+            $menuBurger->setBurger($this);
         }
 
         return $this;
     }
 
-    public function removeMenu(Menu $menu): self
+    public function removeMenuBurger(MenuBurger $menuBurger): self
     {
-        if ($this->menus->removeElement($menu)) {
-            $menu->removeBurger($this);
+        if ($this->menuBurgers->removeElement($menuBurger)) {
+            // set the owning side to null (unless already changed)
+            if ($menuBurger->getBurger() === $this) {
+                $menuBurger->setBurger(null);
+            }
         }
 
         return $this;

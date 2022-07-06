@@ -40,97 +40,116 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 class Menu extends Produit
 {
-
     #[Groups(["menu:write"])]
-    #[ORM\ManyToMany(targetEntity: Burger::class, inversedBy: 'menus')]
-    private $burgers;
+    private $nom;
 
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuBurger::class , cascade:['persist'])]
     #[Groups(["menu:write"])]
-    #[ORM\ManyToMany(targetEntity: PortionFrite::class, inversedBy: 'menus')]
-    private $portions;
+    
+    private $menuBurgers;
 
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuTaille::class ,  cascade:['persist'])]
     #[Groups(["menu:write"])]
-    #[ORM\ManyToMany(targetEntity: Taille::class, inversedBy: 'menus')]
-    private $tailles;
+    private $menuTailles;
+
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuPortion::class, cascade:['persist'])]
+    #[Groups(["menu:write"])]
+    private $menuPortions;
 
 
     public function __construct()
     {
-        $this->burgers = new ArrayCollection();
-        $this->portions = new ArrayCollection();
-        $this->tailles = new ArrayCollection();
+        $this->menuBurgers = new ArrayCollection();
+        $this->menuTailles = new ArrayCollection();
+        $this->menuPortions = new ArrayCollection();
     }
-
-
 
     /**
-     * @return Collection<int, Burger>
+     * @return Collection<int, MenuBurger>
      */
-    public function getBurgers(): Collection
+    public function getMenuBurgers(): Collection
     {
-        return $this->burgers;
+        return $this->menuBurgers;
     }
 
-    public function addBurger(Burger $burger): self
+    public function addMenuBurger(MenuBurger $menuBurger): self
     {
-        if (!$this->burgers->contains($burger)) {
-            $this->burgers[] = $burger;
+        if (!$this->menuBurgers->contains($menuBurger)) {
+            $this->menuBurgers[] = $menuBurger;
+            $menuBurger->setMenu($this);
         }
 
         return $this;
     }
 
-    public function removeBurger(Burger $burger): self
+    public function removeMenuBurger(MenuBurger $menuBurger): self
     {
-        $this->burgers->removeElement($burger);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, PortionFrite>
-     */
-    public function getPortions(): Collection
-    {
-        return $this->portions;
-    }
-
-    public function addPortion(PortionFrite $portion): self
-    {
-        if (!$this->portions->contains($portion)) {
-            $this->portions[] = $portion;
+        if ($this->menuBurgers->removeElement($menuBurger)) {
+            // set the owning side to null (unless already changed)
+            if ($menuBurger->getMenu() === $this) {
+                $menuBurger->setMenu(null);
+            }
         }
 
         return $this;
     }
 
-    public function removePortion(PortionFrite $portion): self
-    {
-        $this->portions->removeElement($portion);
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Taille>
+     * @return Collection<int, MenuTaille>
      */
-    public function getTailles(): Collection
+    public function getMenuTailles(): Collection
     {
-        return $this->tailles;
+        return $this->menuTailles;
     }
 
-    public function addTaille(Taille $taille): self
+    public function addMenuTaille(MenuTaille $menuTaille): self
     {
-        if (!$this->tailles->contains($taille)) {
-            $this->tailles[] = $taille;
+        if (!$this->menuTailles->contains($menuTaille)) {
+            $this->menuTailles[] = $menuTaille;
+            $menuTaille->setMenu($this);
         }
 
         return $this;
     }
 
-    public function removeTaille(Taille $taille): self
+    public function removeMenuTaille(MenuTaille $menuTaille): self
     {
-        $this->tailles->removeElement($taille);
+        if ($this->menuTailles->removeElement($menuTaille)) {
+            // set the owning side to null (unless already changed)
+            if ($menuTaille->getMenu() === $this) {
+                $menuTaille->setMenu(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MenuPortion>
+     */
+    public function getMenuPortions(): Collection
+    {
+        return $this->menuPortions;
+    }
+
+    public function addMenuPortion(MenuPortion $menuPortion): self
+    {
+        if (!$this->menuPortions->contains($menuPortion)) {
+            $this->menuPortions[] = $menuPortion;
+            $menuPortion->setMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenuPortion(MenuPortion $menuPortion): self
+    {
+        if ($this->menuPortions->removeElement($menuPortion)) {
+            // set the owning side to null (unless already changed)
+            if ($menuPortion->getMenu() === $this) {
+                $menuPortion->setMenu(null);
+            }
+        }
 
         return $this;
     }

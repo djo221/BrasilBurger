@@ -5,7 +5,7 @@ namespace App\DataPersister;
 use App\Entity\Menu;
 use Doctrine\ORM\EntityManagerInterface;
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
-
+use App\Services\CalculationPriceService;
 
 /**
  * Permet de redefinir un entité
@@ -15,9 +15,12 @@ class MenuDataPersister implements DataPersisterInterface
 
     private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager) {
+    private $calculePrice;
+
+    public function __construct(EntityManagerInterface $entityManager, CalculationPriceService $calculePrice ) {
      
         $this->entityManager = $entityManager;
+        $this->calculePrice = $calculePrice;
     }
 
     public function supports($data): bool
@@ -28,25 +31,8 @@ class MenuDataPersister implements DataPersisterInterface
 
     public function persist($data)
     {
-     
-
-
-        if ($data instanceof Menu) {
-            $prix = 0;
-            foreach ($data->getBurgers() as $burger) {
-                $prix += $burger->getPrix();
-            }
-            foreach ($data->getTailles() as $taille) {
-                $prix += $taille->getPrix();
-            }
-            foreach ($data->getPortions() as $portion) {
-                $prix += $portion->getPrix();
-            }
-
-            $data->setPrix($prix);
-          
-        }
-
+        $this->calculePrice->calculateMenuPrice($data);
+        
         $this->entityManager->persist($data);
         $this->entityManager->flush();
     }
