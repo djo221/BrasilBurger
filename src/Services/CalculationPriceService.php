@@ -8,24 +8,31 @@ use App\Services\Interfaces\ICalculPriceMenuService;
 class CalculationPriceService implements ICalculPriceMenuService
 {
 
-    public function calculateMenuPrice($data): void
+    public function calculateMenuPrice(Menu $data ): float
     {
-
-        if ($data instanceof Menu) {
+       
             $prix = 0;
             foreach ($data->getMenuBurgers() as $burger) {
                 $menu= $burger->getBurger();
-                $prix += $menu->getPrix();
+               /*  dd("Voici quantité burger bi" ,$burger->getQuantite()); */
+                $prix += $menu->getPrix() * $burger->getQuantite();
             }
             foreach ($data->getMenuTailles() as $taille) {
                 $menu= $taille->getTaille();
-                $prix += $menu->getPrix();
+                $prix += $menu->getPrix() * $taille->getQuantite();;
             }
             foreach ($data->getMenuPortions() as $portion) {
                 $menu= $portion->getPortion();
-                $prix += $menu->getPrix();
+                $prix += $menu->getPrix() * $portion->getQuantite();;
             }
+
             $data->setPrix($prix);
-        }
+          
+
+        return $prix;
     }
+/* 
+    public function manageDoublon(MenuBurder $data){
+
+    } */
 }

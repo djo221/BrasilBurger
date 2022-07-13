@@ -21,12 +21,13 @@ class MenuPortion
     #[Groups(["menu:write"])]
     private $quantite;
 
-    #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'menuPortions')]
-    private $menu;
-
     #[ORM\ManyToOne(targetEntity: PortionFrite::class, inversedBy: 'menuPortions')]
     #[Groups(["menu:write"])]
     private $portion;
+
+    #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'menuPortions')]
+    private $menu;
+
 
     public function getId(): ?int
     {

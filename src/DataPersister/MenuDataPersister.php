@@ -3,9 +3,11 @@
 namespace App\DataPersister;
 
 use App\Entity\Menu;
+use App\Entity\Produit;
 use Doctrine\ORM\EntityManagerInterface;
-use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Services\CalculationPriceService;
+use App\Services\Interfaces\ICalculPriceMenuService;
+use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 
 /**
  * Permet de redefinir un entité
@@ -15,7 +17,7 @@ class MenuDataPersister implements DataPersisterInterface
 
     private EntityManagerInterface $entityManager;
 
-    private $calculePrice;
+    private ICalculPriceMenuService $calculePrice;
 
     public function __construct(EntityManagerInterface $entityManager, CalculationPriceService $calculePrice ) {
      
@@ -31,7 +33,18 @@ class MenuDataPersister implements DataPersisterInterface
 
     public function persist($data)
     {
-        $this->calculePrice->calculateMenuPrice($data);
+        if ($data instanceof Produit) {
+
+            if ($data->getInterseptImage()) {
+                $data->setImage(file_get_contents($data->getInterseptImage())
+            );
+            }
+            // dd($data);
+
+        }
+        
+        $this->calculePrice->calculateMenuPrice( $data);
+
         
         $this->entityManager->persist($data);
         $this->entityManager->flush();

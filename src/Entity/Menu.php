@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+/* test */
+
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MenuRepository;
 use Doctrine\Common\Collections\Collection;
@@ -9,47 +11,51 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MenuRepository::class)]
 #[ApiResource(
-
     collectionOperations: [
         "get" => [
             'method' => 'get',
             'status' => Response::HTTP_OK,
-            'normalization_context' => ['groups' => ['menu:read:simple']],
+            'normalization_context' => ['groups' => ['menu:read']],
         ],
         "post" => [
             'denormalization_context' => ['groups' => ['menu:write']],
-            'normalization_context' => ['groups' => ['menu:read:all']]
+            'normalization_context' => ['groups' => ['menu:write:all']]
         ]
     ],
     itemOperations: [
         "get" => [
-            /* 'method' => 'get',
+             'method' => 'get',
             'requirements' => ['id' => '\d+'],
-            'normalization_context' => ['groups' => ['burger:read:all']], */
+            'normalization_context' => ['groups' => ['menu:read:details']], 
         ],
         "put" => [
-            /* "security" => "is_granted('ROLE_GESTIONNAIRE')",
+            "security" => "is_granted('ROLE_GESTIONNAIRE')",
             "security_message" => "Vous n'avez pas access à cette Ressource",
-            'normalization_context' => ['groups' => ['burger:read:all']] */
+            'normalization_context' => ['groups' => ['all']] 
         ]
     ]
 
-)]
+)] 
 class Menu extends Produit
 {
     #[Groups(["menu:write"])]
     private $nom;
 
+    #[Assert\Valid()]
+    #[Assert\Count(
+        min: 1,
+        minMessage: 'Il faut avoir au moins un Burger dans le Menu',
+        )]
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuBurger::class , cascade:['persist'])]
     #[Groups(["menu:write"])]
-    
     private $menuBurgers;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuTaille::class ,  cascade:['persist'])]
-    #[Groups(["menu:write"])]
+   #[Groups(["menu:write"])]
     private $menuTailles;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuPortion::class, cascade:['persist'])]

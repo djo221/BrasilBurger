@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'normalization_context' => ['groups' => ['burger:read:simple']],
         ],
         "post" => [
-            'denormalization_context' => ['groups' => ['write']]
+            'denormalization_context' => ['groups' => ['burger:write']]
         ]
     ],
     itemOperations: [
@@ -35,7 +35,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ]
 )]
 class Burger extends Produit
-{
+{   
 
     #[Groups(["burger:read:all"])]
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'burgers')]
