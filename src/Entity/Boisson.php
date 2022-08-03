@@ -18,12 +18,14 @@ class Boisson extends Produit
 {
 
 
-    #[ORM\OneToMany(mappedBy: 'boisson', targetEntity: TailleBoisson::class)]
+    #[ORM\OneToMany(mappedBy: 'boisson', targetEntity: TailleBoisson::class,cascade:["persist"])]
     private $tailleBoissons;
 
     public function __construct()
     {
         $this->tailleBoissons = new ArrayCollection();
+        $this->type='boisson';
+
     }
 
     /**

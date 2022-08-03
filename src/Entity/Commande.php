@@ -2,12 +2,43 @@
 
 namespace App\Entity;
 
-use App\Repository\CommandeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\CommandePortion;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Collections\ArrayCollection;
+use Monolog\DateTimeImmutable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
+#[ApiResource(
+    collectionOperations: [
+        "get" => [
+            'method' => 'get',
+            'status' => Response::HTTP_OK,
+            'normalization_context' => ['groups' => ['commande:read']],
+        ],
+        "post" => [
+            'denormalization_context' => ['groups' => ['commande:write']],
+            'normalization_context' => ['groups' => ['commande:write:all']]
+        ]
+    ],
+    itemOperations: [
+        "get" => [
+             'method' => 'get',
+            'requirements' => ['id' => '\d+'],
+            'normalization_context' => ['groups' => ['commande:read:details']], 
+        ],
+        "put" => [
+            "security" => "is_granted('ROLE_GESTIONNAIRE')",
+            "security_message" => "Vous n'avez pas access à cette Ressource",
+            'normalization_context' => ['groups' => ['all']] 
+        ]
+    ]
+
+)] 
 class Commande
 {
     #[ORM\Id]
@@ -19,29 +50,54 @@ class Commande
     private $date;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["commande:read" ,  "commande:write"])]
     private $etat;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["commande:read"  , "commande:write"])]
     private $montant;
 
     #[ORM\ManyToOne(targetEntity: Zone::class, inversedBy: 'commandes')]
     private $zone;
-
+    
     #[ORM\ManyToOne(targetEntity: Livraison::class, inversedBy: 'commandes')]
+    #[Groups(["commande:read"  , "commande:write"])]
     private $livraison;
-
+    
     #[ORM\ManyToOne(targetEntity: Gestionnaire::class, inversedBy: 'commandes')]
     private $gestionnaire;
+    
+    #[ORM\ManyToOne(targetEntity: Quartiers::class, inversedBy: 'commandes')]
+    #[Groups(["commande:read"  , "commande:write"])]
+    private $quartier;
 
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: ProduitCommande::class)]
-    private $produitCommandes;
 
-  
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandeBurger::class  , cascade:['persist'])]
+    #[Groups(["commande:read" , "commande:write:all" , "commande:write"])]
+    private $commandeBurgers;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandeMenu::class  , cascade:['persist'])]
+    #[Groups(["commande:read" , "commande:write:all" , "commande:write"])]
+    private $commandeMenus;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandeTailleBoisson::class , cascade:['persist'])]
+    #[Groups(["commande:read" , "commande:write:all" , "commande:write"])]
+    private $commandeTailleBoissons;
+
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandePortion::class  , cascade:['persist'])]
+    #[Groups(["commande:write"])]
+    private $commandePortions;
+
+
     public function __construct()
     {
-        $this->produitCommandes = new ArrayCollection();
+        $this->commandeTailleBoissons = new ArrayCollection();
+        $this->commandePortions = new ArrayCollection();
+        $this->commandeBurgers = new ArrayCollection();
+        $this->commandeMenus = new ArrayCollection();
+        $this->date= new DateTimeImmutable("now");
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -49,7 +105,7 @@ class Commande
 
     public function getDate(): ?\DateTimeImmutable
     {
-        return $this->date;
+        return new DateTimeImmutable("now");
     }
 
     public function setDate(\DateTimeImmutable $date): self
@@ -119,35 +175,146 @@ class Commande
         return $this;
     }
 
+    
+
+  
+
+
+
+
     /**
-     * @return Collection<int, ProduitCommande>
+     * @return Collection<int, CommandeBurger>
      */
-    public function getProduitCommandes(): Collection
+    public function getCommandeBurgers(): Collection
     {
-        return $this->produitCommandes;
+        return $this->commandeBurgers;
     }
 
-    public function addProduitCommande(ProduitCommande $produitCommande): self
+    public function addCommandeBurger(CommandeBurger $commandeBurger): self
     {
-        if (!$this->produitCommandes->contains($produitCommande)) {
-            $this->produitCommandes[] = $produitCommande;
-            $produitCommande->setCommande($this);
+        if (!$this->commandeBurgers->contains($commandeBurger)) {
+            $this->commandeBurgers[] = $commandeBurger;
+            $commandeBurger->setCommande($this);
         }
 
         return $this;
     }
 
-    public function removeProduitCommande(ProduitCommande $produitCommande): self
+    public function removeCommandeBurger(CommandeBurger $commandeBurger): self
     {
-        if ($this->produitCommandes->removeElement($produitCommande)) {
+        if ($this->commandeBurgers->removeElement($commandeBurger)) {
             // set the owning side to null (unless already changed)
-            if ($produitCommande->getCommande() === $this) {
-                $produitCommande->setCommande(null);
+            if ($commandeBurger->getCommande() === $this) {
+                $commandeBurger->setCommande(null);
             }
         }
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, CommandeMenu>
+     */
+    public function getCommandeMenus(): Collection
+    {
+        return $this->commandeMenus;
+    }
+
+    public function addCommandeMenu(CommandeMenu $commandeMenu): self
+    {
+        if (!$this->commandeMenus->contains($commandeMenu)) {
+            $this->commandeMenus[] = $commandeMenu;
+            $commandeMenu->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeMenu(CommandeMenu $commandeMenu): self
+    {
+        if ($this->commandeMenus->removeElement($commandeMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeMenu->getCommande() === $this) {
+                $commandeMenu->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandeTailleBoisson>
+     */
+    public function getCommandeTailleBoissons(): Collection
+    {
+        return $this->commandeTailleBoissons;
+    }
+
+    public function addCommandeTailleBoisson(CommandeTailleBoisson $commandeTailleBoisson): self
+    {
+        if (!$this->commandeTailleBoissons->contains($commandeTailleBoisson)) {
+            $this->commandeTailleBoissons[] = $commandeTailleBoisson;
+            $commandeTailleBoisson->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeTailleBoisson(CommandeTailleBoisson $commandeTailleBoisson): self
+    {
+        if ($this->commandeTailleBoissons->removeElement($commandeTailleBoisson)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeTailleBoisson->getCommande() === $this) {
+                $commandeTailleBoisson->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandePortion>
+     */
+    public function getCommandePortions(): Collection
+    {
+        return $this->commandePortions;
+    }
+
+    public function addCommandePortion(CommandePortion $commandePortion): self
+    {
+        if (!$this->commandePortions->contains($commandePortion)) {
+            $this->commandePortions[] = $commandePortion;
+            $commandePortion->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandePortion(CommandePortion $commandePortion): self
+    {
+        if ($this->commandePortions->removeElement($commandePortion)) {
+            // set the owning side to null (unless already changed)
+            if ($commandePortion->getCommande() === $this) {
+                $commandePortion->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getQuartier(): ?Quartiers
+    {
+        return $this->quartier;
+    }
+
+    public function setQuartier(?Quartiers $quartier): self
+    {
+        $this->quartier = $quartier;
+
+        return $this;
+    }
+
+    
 
     
 }

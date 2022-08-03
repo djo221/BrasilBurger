@@ -29,26 +29,28 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Taille
 {
 
-    #[Groups(["taille:read:simple", "taille:write" , "menu:write"])]
+    #[Groups(["taille:read:simple", "taille:write" , "menu:write:collection","detail:read:item" ])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[Groups(["taille:read:simple", "taille:write" ])]
+    #[Groups(["taille:read:simple", "taille:write","detail:read:item"  ])]
     #[ORM\Column(type: 'float')]
     private $prix;
 
-    #[Groups(["taille:read:simple", "taille:write"])]
+    #[Groups(["taille:read:simple", "taille:write","detail:read:item" ])]
     #[ORM\Column(type: 'string', length: 255)]
     private $libelle;
 
-
-    #[ORM\OneToMany(mappedBy: 'taille', targetEntity: TailleBoisson::class)]
+    #[Groups(["detail:read:item" ])]
+    #[ORM\OneToMany(mappedBy: 'taille', targetEntity: TailleBoisson::class  , cascade:['persist'])]
     private $tailleBoissons;
 
-    #[ORM\OneToMany(mappedBy: 'taille', targetEntity: MenuTaille::class)]
+    #[ORM\OneToMany(mappedBy: 'taille', targetEntity: MenuTaille::class  , cascade:['persist'])]
     private $menuTailles;
+
+ 
 
     public function __construct()
     {
@@ -149,4 +151,6 @@ class Taille
 
         return $this;
     }
+
+
 }

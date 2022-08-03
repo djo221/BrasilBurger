@@ -38,6 +38,8 @@ class MenuDataPersister implements DataPersisterInterface
             if ($data->getInterseptImage()) {
                 $data->setImage(file_get_contents($data->getInterseptImage())
             );
+            dd($data);
+
             }
             // dd($data);
 

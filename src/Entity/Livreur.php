@@ -10,7 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: LivreurRepository::class)]
 #[ApiResource]
-class Livreur
+class Livreur extends User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

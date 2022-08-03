@@ -7,7 +7,6 @@ use App\Entity\Produit;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -19,8 +18,9 @@ class ProduitDataPersister implements DataPersisterInterface
 
     private $security;
 
-    public function __construct(TokenStorageInterface $token, Security $security)
-    {
+    public function __construct(EntityManagerInterface $entityManager ,TokenStorageInterface $token, Security $security )
+    {   
+        $this->entityManager = $entityManager;
         $this->token = $token;
         $this->security = $security;
     }
@@ -33,14 +33,24 @@ class ProduitDataPersister implements DataPersisterInterface
      * 
      */
     public function persist($data,  array $context = [])
-    {
-    
-
-
-        
-
+    {   
         if ($data instanceof Produit) {
-            $data->setGestionnaire($this->token->getToken()->getUser());
+
+            if ($data->getInterseptImage()) {
+                
+                $data->setImage(file_get_contents($data->getInterseptImage())
+                
+            );
+// dd( $data);
+
+            }
+
+        }
+        
+      
+        if ($data instanceof Produit) {
+            /* dd($this->token->getToken()->getUser()); */
+            // $data->setGestionnaire($this->token->getToken()->getUser());
         }
 
 

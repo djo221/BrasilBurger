@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\InheritanceType("JOINED")]
+#[ORM\DiscriminatorColumn(name: "discr", type: "string")]
+#[ORM\DiscriminatorMap(["client" => "Client", "gestionnaire" => "Gestionnaire", "livreur" => "Livreur" , "user" => "User"])]
 #[ApiResource(
     collectionOperations:[
         "get",
@@ -29,11 +32,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["burger:read:all" , "write", "user:read:simple"])]
+    #[Groups(["burger:read:item" , "write", "user:read:simple"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Groups(["burger:read:all", "user:read:simple"])]
+    #[Groups(["burger:read:item", "user:read:simple"])]
     private $login;
 
     #[ORM\Column(type: 'json')]
@@ -43,9 +46,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $nom = "";
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $prenom = "";
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $adresse = "";
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Burger::class)]
     #[ApiSubresource]
     private $burgers;
+
 
     public function __construct()
     {
@@ -148,6 +161,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $burger->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
 
         return $this;
     }

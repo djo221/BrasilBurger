@@ -477,4 +477,262 @@ Use [36m[1mheroku addons:docs heroku-postgresql[22m[39m to view documentatio
 
  The database schema and the application mapping information are already in sync.
  
-]0;sadiikh@itachi: ~/Bureau/FilRougeProjets/symfony/brasil_burger[01;32msadiikh@itachi[00m:[01;34m~/Bureau/Fil
+]0;sadiikh@itachi: ~/Bureau/FilRougeProjets/symfony/brasil_burger[01;32msadiikh@itachi[00m:[01;34m~/Bureau/FilRougeProjets/symfony/brasil_burger[00m$ php bin/console doctrine:migrations:migrate
+
+ [32mWARNING! You are about to execute a migration in database "brasil_burger_test" that could result in schema changes and data loss. Are you sure you wish to continue? (yes/no)[39m [[33myes[39m]:
+ > 
+
+[37;41m                                                                                                                        [39;49m
+[37;41m [ERROR] The version "latest" couldn't be reached, there are no registered migrations.                                  [39;49m
+[37;41m                                                                                                                        [39;49m
+
+]0;sadiikh@itachi: ~/Bureau/FilRougeProjets/symfony/brasil_burger[01;32msadiikh@itachi[00m:[01;34m~/Bureau/FilRougeProjets/symfony/brasil_burger[00m$ git add .
+]0;sadiikh@itachi: ~/Bureau/FilRougeProjets/symfony/brasil_burger[01;32msadiikh@itachi[00m:[01;34m~/Bureau/FilRougeProjets/symfony/brasil_burger[00m$ git commit -m “deploiement ”
+error: pathspec '”' did not match any file(s) known to git
+]0;sadiikh@itachi: ~/Bureau/FilRougeProjets/symfony/brasil_burger[01;32msadiikh@itachi[00m:[01;34m~/Bureau/FilRougeProjets/symfony/brasil_burger[00m$ git commit -m “deploiement ”[1P”
+[master ae8aa00] “deploiement”
+ 11 files changed, 482 insertions(+), 281 deletions(-)
+ create mode 100644 Procfile
+ create mode 100644 cache:clear
+ delete mode 100644 migrations/Version20220706084829.php
+ delete mode 100644 migrations/Version20220706085231.php
+ delete mode 100644 migrations/Version20220706085718.php
+ delete mode 100644 migrations/Version20220706090200.php
+ delete mode 100644 migrations/Version20220706090809.php
+ delete mode 100644 migrations/Version20220706091511.php
+ delete mode 100644 migrations/Version20220706194705.php
+ delete mode 100644 migrations/Version20220707121218.php
+]0;sadiikh@itachi: ~/Bureau/FilRougeProjets/symfony/brasil_burger[01;32msadiikh@itachi[00m:[01;34m~/Bureau/FilRougeProjets/symfony/brasil_burger[00m$ git commit -m “deploiement” ”add .[K
+]0;sadiikh@itachi: ~/Bureau/FilRougeProjets/symfony/brasil_burger[01;32msadiikh@itachi[00m:[01;34m~/Bureau/FilRougeProjets/symfony/brasil_burger[00m$ git add .commit -m “deploiement”[K[1Pdeploiement"deploiement[C[C[C[C[C[C[C[C[C[C[C"
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+]0;sadiikh@itachi: ~/Bureau/FilRougeProjets/symfony/brasil_burger[01;32msadiikh@itachi[00m:[01;34m~/Bureau/FilRougeProjets/symfony/brasil_burger[00m$ git push heroh[Kku master
+Enumerating objects: 197, done.
+Counting objects:   0% (1/197)Counting objects:   1% (2/197)Counting objects:   2% (4/197)Counting objects:   3% (6/197)Counting objects:   4% (8/197)Counting objects:   5% (10/197)Counting objects:   6% (12/197)Counting objects:   7% (14/197)Counting objects:   8% (16/197)Counting objects:   9% (18/197)Counting objects:  10% (20/197)Counting objects:  11% (22/197)Counting objects:  12% (24/197)Counting objects:  13% (26/197)Counting objects:  14% (28/197)Counting objects:  15% (30/197)Counting objects:  16% (32/197)Counting objects:  17% (34/197)Counting objects:  18% (36/197)Counting objects:  19% (38/197)Counting objects:  20% (40/197)Counting objects:  21% (42/197)Counting objects:  22% (44/197)Counting objects:  23% (46/197)Counting objects:  24% (48/197)Counting objects:  25% (50/197)Counting objects:  26% (52/197)Counting objects:  27% (54/197)Counting objects:  28% (56/197)Counting objects:  29% (58/197)Counting objects:  30% (60/197)Counting objects:  31% (62/197)Counting objects:  32% (64/197)Counting objects:  33% (66/197)Counting objects:  34% (67/197)Counting objects:  35% (69/197)Counting objects:  36% (71/197)Counting objects:  37% (73/197)Counting objects:  38% (75/197)Counting objects:  39% (77/197)Counting objects:  40% (79/197)Counting objects:  41% (81/197)Counting objects:  42% (83/197)Counting objects:  43% (85/197)Counting objects:  44% (87/197)Counting objects:  45% (89/197)Counting objects:  46% (91/197)Counting objects:  47% (93/197)Counting objects:  48% (95/197)Counting objects:  49% (97/197)Counting objects:  50% (99/197)Counting objects:  51% (101/197)Counting objects:  52% (103/197)Counting objects:  53% (105/197)Counting objects:  54% (107/197)Counting objects:  55% (109/197)Counting objects:  56% (111/197)Counting objects:  57% (113/197)Counting objects:  58% (115/197)Counting objects:  59% (117/197)Counting objects:  60% (119/197)Counting objects:  61% (121/197)Counting objects:  62% (123/197)Counting objects:  63% (125/197)Counting objects:  64% (127/197)Counting objects:  65% (129/197)Counting objects:  66% (131/197)Counting objects:  67% (132/197)Counting objects:  68% (134/197)Counting objects:  69% (136/197)Counting objects:  70% (138/197)Counting objects:  71% (140/197)Counting objects:  72% (142/197)Counting objects:  73% (144/197)Counting objects:  74% (146/197)Counting objects:  75% (148/197)Counting objects:  76% (150/197)Counting objects:  77% (152/197)Counting objects:  78% (154/197)Counting objects:  79% (156/197)Counting objects:  80% (158/197)Counting objects:  81% (160/197)Counting objects:  82% (162/197)Counting objects:  83% (164/197)Counting objects:  84% (166/197)Counting objects:  85% (168/197)Counting objects:  86% (170/197)Counting objects:  87% (172/197)Counting objects:  88% (174/197)Counting objects:  89% (176/197)Counting objects:  90% (178/197)Counting objects:  91% (180/197)Counting objects:  92% (182/197)Counting objects:  93% (184/197)Counting objects:  94% (186/197)Counting objects:  95% (188/197)Counting objects:  96% (190/197)Counting objects:  97% (192/197)Counting objects:  98% (194/197)Counting objects:  99% (196/197)Counting objects: 100% (197/197)Counting objects: 100% (197/197), done.
+Delta compression using up to 8 threads
+Compressing objects:   0% (1/188)Compressing objects:   1% (2/188)Compressing objects:   2% (4/188)Compressing objects:   3% (6/188)Compressing objects:   4% (8/188)Compressing objects:   5% (10/188)Compressing objects:   6% (12/188)Compressing objects:   7% (14/188)Compressing objects:   8% (16/188)Compressing objects:   9% (17/188)Compressing objects:  10% (19/188)Compressing objects:  11% (21/188)Compressing objects:  12% (23/188)Compressing objects:  13% (25/188)Compressing objects:  14% (27/188)Compressing objects:  15% (29/188)Compressing objects:  16% (31/188)Compressing objects:  17% (32/188)Compressing objects:  18% (34/188)Compressing objects:  19% (36/188)Compressing objects:  20% (38/188)Compressing objects:  21% (40/188)Compressing objects:  22% (42/188)Compressing objects:  23% (44/188)Compressing objects:  24% (46/188)Compressing objects:  25% (47/188)Compressing objects:  26% (49/188)Compressing objects:  27% (51/188)Compressing objects:  28% (53/188)Compressing objects:  29% (55/188)Compressing objects:  30% (57/188)Compressing objects:  31% (59/188)Compressing objects:  32% (61/188)Compressing objects:  33% (63/188)Compressing objects:  34% (64/188)Compressing objects:  35% (66/188)Compressing objects:  36% (68/188)Compressing objects:  37% (70/188)Compressing objects:  38% (72/188)Compressing objects:  39% (74/188)Compressing objects:  40% (76/188)Compressing objects:  41% (78/188)Compressing objects:  42% (79/188)Compressing objects:  43% (81/188)Compressing objects:  44% (83/188)Compressing objects:  45% (85/188)Compressing objects:  46% (87/188)Compressing objects:  47% (89/188)Compressing objects:  48% (91/188)Compressing objects:  49% (93/188)Compressing objects:  50% (94/188)Compressing objects:  51% (96/188)Compressing objects:  52% (98/188)Compressing objects:  53% (100/188)Compressing objects:  54% (102/188)Compressing objects:  55% (104/188)Compressing objects:  56% (106/188)Compressing objects:  57% (108/188)Compressing objects:  58% (110/188)Compressing objects:  59% (111/188)Compressing objects:  60% (113/188)Compressing objects:  61% (115/188)Compressing objects:  62% (117/188)Compressing objects:  63% (119/188)Compressing objects:  64% (121/188)Compressing objects:  65% (123/188)Compressing objects:  66% (125/188)Compressing objects:  67% (126/188)Compressing objects:  68% (128/188)Compressing objects:  69% (130/188)Compressing objects:  70% (132/188)Compressing objects:  71% (134/188)Compressing objects:  72% (136/188)Compressing objects:  73% (138/188)Compressing objects:  74% (140/188)Compressing objects:  75% (141/188)Compressing objects:  76% (143/188)Compressing objects:  77% (145/188)Compressing objects:  78% (147/188)Compressing objects:  79% (149/188)Compressing objects:  80% (151/188)Compressing objects:  81% (153/188)Compressing objects:  82% (155/188)Compressing objects:  83% (157/188)Compressing objects:  84% (158/188)Compressing objects:  85% (160/188)Compressing objects:  86% (162/188)Compressing objects:  87% (164/188)Compressing objects:  88% (166/188)Compressing objects:  89% (168/188)Compressing objects:  90% (170/188)Compressing objects:  91% (172/188)Compressing objects:  92% (173/188)Compressing objects:  93% (175/188)Compressing objects:  94% (177/188)Compressing objects:  95% (179/188)Compressing objects:  96% (181/188)Compressing objects:  97% (183/188)Compressing objects:  98% (185/188)Compressing objects:  99% (187/188)Compressing objects: 100% (188/188)Compressing objects: 100% (188/188), done.
+Writing objects:   0% (1/197)Writing objects:   1% (2/197)Writing objects:   2% (4/197)Writing objects:   3% (6/197)Writing objects:   4% (8/197)Writing objects:   5% (10/197)Writing objects:   6% (12/197)Writing objects:   7% (14/197)Writing objects:   8% (16/197)Writing objects:   9% (18/197)Writing objects:  10% (20/197)Writing objects:  11% (22/197)Writing objects:  12% (24/197)Writing objects:  13% (26/197)Writing objects:  14% (28/197)Writing objects:  15% (30/197)Writing objects:  16% (32/197)Writing objects:  17% (34/197)Writing objects:  18% (36/197)Writing objects:  19% (38/197)Writing objects:  20% (40/197)Writing objects:  21% (42/197)Writing objects:  22% (44/197)Writing objects:  23% (46/197)Writing objects:  24% (48/197)Writing objects:  25% (50/197)Writing objects:  26% (52/197)Writing objects:  27% (54/197)Writing objects:  28% (56/197)Writing objects:  29% (58/197)Writing objects:  30% (60/197)Writing objects:  31% (62/197)Writing objects:  32% (64/197)Writing objects:  34% (67/197)Writing objects:  35% (70/197)Writing objects:  36% (71/197)Writing objects:  37% (74/197)Writing objects:  38% (76/197)Writing objects:  39% (77/197)Writing objects:  40% (79/197)Writing objects:  41% (81/197)Writing objects:  42% (84/197)Writing objects:  43% (85/197)Writing objects:  44% (87/197)Writing objects:  45% (89/197)Writing objects:  46% (91/197)Writing objects:  48% (95/197)Writing objects:  49% (98/197)Writing objects:  50% (99/197)Writing objects:  51% (102/197)Writing objects:  52% (103/197)Writing objects:  53% (105/197)Writing objects:  54% (107/197)Writing objects:  55% (109/197)Writing objects:  56% (111/197)Writing objects:  57% (113/197)Writing objects:  58% (115/197)Writing objects:  59% (117/197)Writing objects:  60% (119/197)Writing objects:  61% (121/197)Writing objects:  62% (123/197)Writing objects:  63% (125/197)Writing objects:  64% (127/197)Writing objects:  67% (132/197)Writing objects:  68% (134/197)Writing objects:  69% (136/197)Writing objects:  70% (138/197)Writing objects:  71% (140/197)Writing objects:  72% (142/197)Writing objects:  73% (144/197)Writing objects:  74% (146/197)Writing objects:  75% (148/197)Writing objects:  76% (150/197)Writing objects:  77% (152/197)Writing objects:  78% (154/197)Writing objects:  79% (156/197)Writing objects:  80% (158/197)Writing objects:  81% (160/197)Writing objects:  82% (162/197)Writing objects:  83% (164/197)Writing objects:  84% (166/197)Writing objects:  85% (168/197)Writing objects:  86% (170/197)Writing objects:  87% (172/197)Writing objects:  88% (174/197)Writing objects:  89% (176/197)Writing objects:  90% (178/197)Writing objects:  91% (180/197)Writing objects:  92% (183/197)Writing objects:  93% (184/197)Writing objects:  94% (186/197)Writing objects:  95% (188/197)Writing objects:  96% (190/197)Writing objects:  97% (192/197)Writing objects:  98% (194/197)Writing objects:  99% (196/197)Writing objects: 100% (197/197)Writing objects: 100% (197/197), 96.44 KiB | 5.67 MiB/s, done.
+Total 197 (delta 92), reused 0 (delta 0)
+remote: Compressing source files... done.[K
+remote: Building source:[K
+remote: 
+remote: -----> Building on the Heroku-20 stack[K
+remote: -----> Determining which buildpack to use for this app[K
+remote: -----> PHP app detected[K
+remote: -----> Bootstrapping...[K
+remote: -----> Preparing platform package installation...[K
+remote: -----> Installing platform packages...[K
+remote:        - php (8.1.8)[K
+remote:        - apache (2.4.54)[K
+remote:        - composer (2.3.9)[K
+remote:        - nginx (1.22.0)[K
+remote:        - ext-sodium (bundled with php)[K
+remote: [1;33m       NOTICE: [0mdetected userland polyfill packages for PHP extensions[K
+remote: [1;33m       NOTICE: [0mnow attempting to install native extension packages[K
+remote:        Installing extensions provided by symfony/polyfill-mbstring:[K
+remote:        - ext-mbstring... remote:        - ext-mbstring (bundled with php)[K
+remote: -----> Installing dependencies...[K
+remote:        Composer version 2.3.9 2022-07-05 16:52:11[K
+remote:        Installing dependencies from lock file[K
+remote:        Verifying lock file contents can be installed on current platform.[K
+remote:        Package operations: 105 installs, 0 updates, 0 removals[K
+remote:          - Downloading symfony/flex (v2.2.2)[K
+remote:          - Downloading symfony/runtime (v6.1.1)[K
+remote:          - Downloading willdurand/negotiation (3.1.0)[K
+remote:          - Downloading psr/link (2.0.1)[K
+remote:          - Downloading symfony/web-link (v6.1.0)[K
+remote:          - Downloading symfony/serializer (v6.1.1)[K
+remote:          - Downloading symfony/polyfill-mbstring (v1.26.0)[K
+remote:          - Downloading symfony/polyfill-intl-normalizer (v1.26.0)[K
+remote:          - Downloading symfony/polyfill-intl-grapheme (v1.26.0)[K
+remote:          - Downloading symfony/string (v6.1.0)[K
+remote:          - Downloading symfony/property-info (v6.1.1)[K
+remote:          - Downloading symfony/property-access (v6.1.0)[K
+remote:          - Downloading symfony/deprecation-contracts (v3.1.0)[K
+remote:          - Downloading symfony/http-foundation (v6.1.1)[K
+remote:          - Downloading psr/event-dispatcher (1.0.0)[K
+remote:          - Downloading symfony/event-dispatcher-contracts (v3.1.0)[K
+remote:          - Downloading symfony/event-dispatcher (v6.1.0)[K
+remote:          - Downloading symfony/var-dumper (v6.1.0)[K
+remote:          - Downloading psr/log (3.0.0)[K
+remote:          - Downloading symfony/error-handler (v6.1.0)[K
+remote:          - Downloading symfony/http-kernel (v6.1.1)[K
+remote:          - Downloading psr/container (2.0.2)[K
+remote:          - Downloading psr/cache (3.0.0)[K
+remote:          - Downloading fig/link-util (1.2.0)[K
+remote:          - Downloading doctrine/inflector (2.0.4)[K
+remote:          - Downloading api-platform/core (v2.6.8)[K
+remote:          - Downloading symfony/routing (v6.1.1)[K
+remote:          - Downloading symfony/finder (v6.1.0)[K
+remote:          - Downloading symfony/filesystem (v6.1.0)[K
+remote:          - Downloading symfony/service-contracts (v3.1.0)[K
+remote:          - Downloading symfony/dependency-injection (v6.1.0)
+remote:          - Downloading symfony/config (v6.1.0)[K
+remote:          - Downloading symfony/var-exporter (v6.1.1)[K
+remote:          - Downloading symfony/cache-contracts (v3.1.0)[K
+remote:          - Downloading symfony/cache (v6.1.1)[K
+remote:          - Downloading symfony/framework-bundle (v6.1.1)[K
+remote:          - Downloading symfony/stopwatch (v6.1.0)[K
+remote:          - Downloading symfony/console (v6.1.1)[K
+remote:          - Downloading laminas/laminas-code (4.5.2)[K
+remote:          - Downloading friendsofphp/proxy-manager-lts (v1.0.12)[K
+remote:          - Downloading doctrine/event-manager (1.1.1)[K
+remote:          - Downloading doctrine/deprecations (v1.0.0)[K
+remote:          - Downloading doctrine/cache (2.2.0)[K
+remote:          - Downloading doctrine/dbal (3.3.7)[K
+remote:          - Downloading doctrine/migrations (3.5.1)[K
+remote:          - Downloading doctrine/collections (1.6.8)[K
+remote:          - Downloading doctrine/persistence (3.0.2)[K
+remote:          - Downloading symfony/doctrine-bridge (v6.1.0)[K
+remote:          - Downloading doctrine/sql-formatter (1.1.3)[K
+remote:          - Downloading doctrine/lexer (1.2.3)[K
+remote:          - Downloading doctrine/annotations (1.13.3)[K
+remote:          - Downloading doctrine/doctrine-bundle (2.7.0)[K
+remote:          - Downloading doctrine/doctrine-migrations-bundle (3.2.2)[K
+remote:          - Downloading doctrine/instantiator (1.4.1)[K
+remote:          - Downloading doctrine/common (3.3.0)[K
+remote:          - Downloading doctrine/orm (2.12.3)[K
+remote:          - Downloading stella-maris/clock (0.1.4)[K
+remote:          - Downloading lcobucci/clock (2.2.0)[K
+remote:          - Downloading symfony/translation-contracts (v3.1.0)[K
+remote:          - Downloading symfony/password-hasher (v6.1.0)[K
+remote:          - Downloading symfony/security-core (v6.1.0)[K
+remote:          - Downloading symfony/security-http (v6.1.1)[K
+remote:          - Downloading symfony/security-csrf (v6.1.0)[K
+remote:          - Downloading symfony/security-bundle (v6.1.0)[K
+remote:          - Downloading namshi/jose (7.2.3)[K
+remote:          - Downloading lcobucci/jwt (4.1.5)[K
+remote:          - Downloading lexik/jwt-authentication-bundle (v2.16.0)[K
+remote:          - Downloading nelmio/cors-bundle (2.2.0)[K
+remote:          - Downloading webmozart/assert (1.11.0)[K
+remote:          - Downloading phpdocumentor/reflection-common (2.2.0)[K
+remote:          - Downloading phpdocumentor/type-resolver (1.6.1)[K
+remote:          - Downloading phpdocumentor/reflection-docblock (5.3.0)[K
+remote:          - Downloading phpstan/phpdoc-parser (1.6.3)[K
+remote:          - Downloading sensio/framework-extra-bundle (v6.2.6)[K
+remote:          - Downloading symfony/apache-pack (v1.0.1)[K
+remote:          - Downloading symfony/asset (v6.1.0)[K
+remote:          - Downloading symfony/messenger (v6.1.0)[K
+remote:          - Downloading symfony/doctrine-messenger (v6.1.1)[K
+remote:          - Downloading symfony/dotenv (v6.1.0)[K
+remote:          - Downloading symfony/expression-language (v6.1.0)[K
+remote:          - Downloading symfony/polyfill-intl-icu (v1.26.0)[K
+remote:          - Downloading symfony/options-resolver (v6.1.0)[K
+remote:          - Downloading symfony/form (v6.1.1)[K
+remote:          - Downloading symfony/polyfill-intl-idn (v1.26.0)[K
+remote:          - Downloading symfony/mime (v6.1.1)[K
+remote:          - Downloading egulias/email-validator (3.2.1)[K
+remote:          - Downloading symfony/mailer (v6.1.2)[K
+remote:          - Downloading symfony/google-mailer (v6.1.0)[K
+remote:          - Downloading symfony/http-client-contracts (v3.1.0)[K
+remote:          - Downloading symfony/http-client (v6.1.1)[K
+remote:          - Downloading symfony/intl (v6.1.0)[K
+remote:          - Downloading monolog/monolog (3.1.0)[K
+remote:          - Downloading symfony/monolog-bridge (v6.1.1)[K
+remote:          - Downloading symfony/monolog-bundle (v3.8.0)[K
+remote:          - Downloading symfony/notifier (v6.1.0)[K
+remote:          - Downloading symfony/process (v6.1.0)[K
+remote:          - Downloading symfony/proxy-manager-bridge (v6.1.0)[K
+remote:          - Downloading symfony/translation (v6.1.0)[K
+remote:          - Downloading twig/twig (v3.4.1)[K
+remote:          - Downloading symfony/twig-bridge (v6.1.0)[K
+remote:          - Downloading symfony/validator (v6.1.1)[K
+remote:          - Downloading symfony/yaml (v6.1.0)[K
+remote:          - Downloading symfony/twig-bundle (v6.1.1)[K
+remote:          - Downloading twig/extra-bundle (v3.4.0)[K
+remote:          - Installing symfony/flex (v2.2.2): Extracting archive[K
+remote:          - Installing symfony/runtime (v6.1.1): Extracting archive[K
+remote:          - Installing willdurand/negotiation (3.1.0): Extracting archive[K
+remote:          - Installing psr/link (2.0.1): Extracting archive[K
+remote:          - Installing symfony/web-link (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/serializer (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/polyfill-mbstring (v1.26.0): Extracting archive[K
+remote:          - Installing symfony/polyfill-intl-normalizer (v1.26.0): Extracting archive[K
+remote:          - Installing symfony/polyfill-intl-grapheme (v1.26.0): Extracting archive[K
+remote:          - Installing symfony/string (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/property-info (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/property-access (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/deprecation-contracts (v3.1.0): Extracting archive[K
+remote:          - Installing symfony/http-foundation (v6.1.1): Extracting archive[K
+remote:          - Installing psr/event-dispatcher (1.0.0): Extracting archive[K
+remote:          - Installing symfony/event-dispatcher-contracts (v3.1.0): Extracting archive[K
+remote:          - Installing symfony/event-dispatcher (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/var-dumper (v6.1.0): Extracting archive[K
+remote:          - Installing psr/log (3.0.0): Extracting archive[K
+remote:          - Installing symfony/error-handler (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/http-kernel (v6.1.1): Extracting archive[K
+remote:          - Installing psr/container (2.0.2): Extracting archive[K
+remote:          - Installing psr/cache (3.0.0): Extracting archive[K
+remote:          - Installing fig/link-util (1.2.0): Extracting archive[K
+remote:          - Installing doctrine/inflector (2.0.4): Extracting archive[K
+remote:          - Installing api-platform/core (v2.6.8): Extracting archive[K
+remote:          - Installing symfony/routing (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/finder (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/filesystem (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/service-contracts (v3.1.0): Extracting archive[K
+remote:          - Installing symfony/dependency-injection (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/config (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/var-exporter (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/cache-contracts (v3.1.0): Extracting archive[K
+remote:          - Installing symfony/cache (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/framework-bundle (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/stopwatch (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/console (v6.1.1): Extracting archive[K
+remote:          - Installing laminas/laminas-code (4.5.2): Extracting archive[K
+remote:          - Installing friendsofphp/proxy-manager-lts (v1.0.12): Extracting archive[K
+remote:          - Installing doctrine/event-manager (1.1.1): Extracting archive[K
+remote:          - Installing doctrine/deprecations (v1.0.0): Extracting archive[K
+remote:          - Installing doctrine/cache (2.2.0): Extracting archive[K
+remote:          - Installing doctrine/dbal (3.3.7): Extracting archive[K
+remote:          - Installing doctrine/migrations (3.5.1): Extracting archive[K
+remote:          - Installing doctrine/collections (1.6.8): Extracting archive[K
+remote:          - Installing doctrine/persistence (3.0.2): Extracting archive[K
+remote:          - Installing symfony/doctrine-bridge (v6.1.0): Extracting archive[K
+remote:          - Installing doctrine/sql-formatter (1.1.3): Extracting archive[K
+remote:          - Installing doctrine/lexer (1.2.3): Extracting archive[K
+remote:          - Installing doctrine/annotations (1.13.3): Extracting archive[K
+remote:          - Installing doctrine/doctrine-bundle (2.7.0): Extracting archive[K
+remote:          - Installing doctrine/doctrine-migrations-bundle (3.2.2): Extracting archive[K
+remote:          - Installing doctrine/instantiator (1.4.1): Extracting archive[K
+remote:          - Installing doctrine/common (3.3.0): Extracting archive[K
+remote:          - Installing doctrine/orm (2.12.3): Extracting archive[K
+remote:          - Installing stella-maris/clock (0.1.4): Extracting archive[K
+remote:          - Installing lcobucci/clock (2.2.0): Extracting archive[K
+remote:          - Installing symfony/translation-contracts (v3.1.0): Extracting archive[K
+remote:          - Installing symfony/password-hasher (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/security-core (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/security-http (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/security-csrf (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/security-bundle (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/polyfill-php56 (v1.20.0)[K
+remote:          - Installing namshi/jose (7.2.3): Extracting archive[K
+remote:          - Installing lcobucci/jwt (4.1.5): Extracting archive[K
+remote:          - Installing lexik/jwt-authentication-bundle (v2.16.0): Extracting archive[K
+remote:          - Installing nelmio/cors-bundle (2.2.0): Extracting archive[K
+remote:          - Installing webmozart/assert (1.11.0): Extracting archive[K
+remote:          - Installing phpdocumentor/reflection-common (2.2.0): Extracting archive[K
+remote:          - Installing phpdocumentor/type-resolver (1.6.1): Extracting archive[K
+remote:          - Installing phpdocumentor/reflection-docblock (5.3.0): Extracting archive[K
+remote:          - Installing phpstan/phpdoc-parser (1.6.3): Extracting archive[K
+remote:          - Installing sensio/framework-extra-bundle (v6.2.6): Extracting archive[K
+remote:          - Installing symfony/apache-pack (v1.0.1): Extracting archive[K
+remote:          - Installing symfony/asset (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/messenger (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/doctrine-messenger (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/dotenv (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/expression-language (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/polyfill-intl-icu (v1.26.0): Extracting archive[K
+remote:          - Installing symfony/options-resolver (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/form (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/polyfill-intl-idn (v1.26.0): Extracting archive[K
+remote:          - Installing symfony/mime (v6.1.1): Extracting archive[K
+remote:          - Installing egulias/email-validator (3.2.1): Extracting archive[K
+remote:          - Installing symfony/mailer (v6.1.2): Extracting archive[K
+remote:          - Installing symfony/google-mailer (v6.1.0): Extracting archive[K
+remote:          - Installing symfony/http-client-contracts (v3.1.0): Extracting archive[K
+remote:          - Installing symfony/http-client (v6.1.1): Extracting archive[K
+remote:          - Installing symfony/intl (v6.1.0): Extracting archive[K
+remote:          - Ins

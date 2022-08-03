@@ -1,43 +1,40 @@
 <?php
-
 namespace App\DataProvider;
 
-use App\Entity\Catalogue;
+use App\Entity\dto\Catalogue;
 use App\Repository\MenuRepository;
 use App\Repository\BurgerRepository;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 
 
-final class CatalogueDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
+class CatalogueDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
 {
-
+    private $menusRepo;
     private $burgerRepo;
-    private $menuRepo;
 
-    public function __construct( BurgerRepository $burgerRepo , MenuRepository $menuRepo)
+    public function __construct(MenuRepository $menusRepo, BurgerRepository $burgerRepo)
     {
-        $this->burgerRepo = $burgerRepo;
-        $this->menuRepo = $menuRepo;
-
+        $this->menusRepo=$menusRepo;
+        $this->burgerRepo=$burgerRepo;
     }
-    
+
+
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
         return Catalogue::class === $resourceClass;
+      
     }
-    
+
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
-    {
-        // Retrieve the blog post collection from somewhere
-        
-        $catalogues = [];
-        $catalogues["burger"] = $this->burgerRepo->findAll();
-     /*    dd($catalogues["burger"]); */
-        $catalogues["menu"] = $this->menuRepo->findAll();
-
-        
-        return $catalogues;
-
+    {   
+        if( Catalogue::class === $resourceClass){
+            //dd($this->menusRepo->findAll());
+            return [ 
+                ["menu" => $this->menusRepo->findAll()], //return $this->menus->findall
+                ["burger"=> $this->burgerRepo->findAll()]
+            ];
+        }
     }
+
 }

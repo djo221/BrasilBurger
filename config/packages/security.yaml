@@ -41,6 +41,8 @@ security:
 
           - { path: ^/api/login, roles: PUBLIC_ACCESS } #on peut acceder sans devoir s'authentifier
           - { path: ^/api/register, roles: PUBLIC_ACCESS }
+          - { path: ^/api/details, roles: PUBLIC_ACCESS }
+          - { path: ^/api/catalogues, roles: PUBLIC_ACCESS }
           - { path: ^/api$, roles: PUBLIC_ACCESS }
 
           - { path: ^/api, roles: IS_AUTHENTICATED_FULLY } #il faut s'authentifier

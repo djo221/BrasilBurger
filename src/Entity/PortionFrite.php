@@ -7,7 +7,7 @@ use App\Repository\PortionFriteRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: PortionFriteRepository::class)]
 #[ApiResource(
@@ -21,16 +21,19 @@ class PortionFrite extends Produit
     #[ORM\OneToMany(mappedBy: 'portion', targetEntity: MenuPortion::class)]
     private $menuPortions;
 
+    #[ORM\OneToMany(mappedBy: 'portionFrite', targetEntity: CommandePortion::class)]
+    private $commandePortions;
+
+
     public function __construct()
     {
         $this->menuTailles = new ArrayCollection();
         $this->menuPortions = new ArrayCollection();
+        $this->commandePortions = new ArrayCollection();
+        $this->type='portion';
     }
 
   
-
-    
-
     /**
      * @return Collection<int, MenuPortion>
      */
@@ -60,4 +63,36 @@ class PortionFrite extends Produit
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, CommandePortion>
+     */
+    public function getCommandePortions(): Collection
+    {
+        return $this->commandePortions;
+    }
+
+    public function addCommandePortion(CommandePortion $commandePortion): self
+    {
+        if (!$this->commandePortions->contains($commandePortion)) {
+            $this->commandePortions[] = $commandePortion;
+            $commandePortion->setPortionFrite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandePortion(CommandePortion $commandePortion): self
+    {
+        if ($this->commandePortions->removeElement($commandePortion)) {
+            // set the owning side to null (unless already changed)
+            if ($commandePortion->getPortionFrite() === $this) {
+                $commandePortion->setPortionFrite(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 }

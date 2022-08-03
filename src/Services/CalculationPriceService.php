@@ -10,7 +10,7 @@ class CalculationPriceService implements ICalculPriceMenuService
 
     public function calculateMenuPrice(Menu $data ): float
     {
-       
+            
             $prix = 0;
             foreach ($data->getMenuBurgers() as $burger) {
                 $menu= $burger->getBurger();

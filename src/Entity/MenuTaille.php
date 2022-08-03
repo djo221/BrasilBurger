@@ -14,15 +14,15 @@ class MenuTaille
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["menu:write"])]
+    #[Groups(["menu:write:collection","detail:read:item" ])]
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["menu:write"])]
+    #[Groups(["menu:write:collection","detail:read:item" ])]
     private $quantite;
 
     #[ORM\ManyToOne(targetEntity: Taille::class, inversedBy: 'menuTailles')]
-    #[Groups(["menu:write"])]
+    #[Groups(["menu:write:collection","detail:read:item" ])]
     private $taille;
 
     #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'menuTailles')]

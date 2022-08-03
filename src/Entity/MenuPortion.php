@@ -14,15 +14,15 @@ class MenuPortion
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["menu:write"])]
+    #[Groups(["menu:write" , "detail:read:item"])]
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["menu:write"])]
+    #[Groups(["menu:write:collection" , "detail:read:item"])]
     private $quantite;
 
     #[ORM\ManyToOne(targetEntity: PortionFrite::class, inversedBy: 'menuPortions')]
-    #[Groups(["menu:write"])]
+    #[Groups(["menu:write:collection" , "detail:read:item"])]
     private $portion;
 
     #[ORM\ManyToOne(targetEntity: Menu::class, inversedBy: 'menuPortions')]

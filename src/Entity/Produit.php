@@ -4,10 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProduitRepository;
-use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
@@ -33,7 +31,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
         "get" => [
              'method' => 'get',
             'requirements' => ['id' => '\d+'],
-            'normalization_context' => ['groups' => ['produit:read:details']], 
+            'normalization_context' => ['groups' => ['produit:read:item']], 
         ],
         "put" => [
              "security" => "is_granted('ROLE_GESTIONNAIRE')",
@@ -45,31 +43,31 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 )]
 abstract class Produit
 {
-    #[Groups(["produit:read", "produit:read:details" , "menu:write" ])]
+    #[Groups(["produit:read", "produit:read:item" , "menu:write:collection" , "commande:read" , "commande:write" , "catalogue:read:collection" , "detail:read:item"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
     
-    #[Groups(["produit:read", "produit:read:details"])]
+    #[Groups([ "menu:write:collection","burger:write:collection","menu:read:collection" , "burger:read:collection","produit:read", "produit:read:details" , "commande:read", "catalogue:read:collection" , "detail:read:item"])]
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
 
     
-    #[Groups(["produit:write","produit:read" ,"produit:read:details"])] 
+   // #[Groups(["produit:read","produit:read:details" , "menu:read:collection" , "produit:read:item" , "burger:read:item" , "burger:read:collection" , "catalogue:read:collection" , "detail:read:item"])] 
     #[ORM\Column(type: 'blob', nullable: true)]
     private $image;
     
 
 
-    #[SerializedName("images")]
-    #[Groups(["menu:write"])]
-    private string $InterseptImage;
+    #[SerializedName("images")] 
+    #[Groups(["menu:write:collectibon" ,"menu:read:collection" , "burger:write:collection"])]
+    private string $InterseptImage = "";
   
 
 
-    #[Groups(["burger:read:simple", "burger:read:all"])]
+    #[Groups(["burger:write:collection","burger:read:item", "burger:read:collection" , "menu:read:collection",  "catalogue:read:collection" ,  "detail:read:item"])]
     #[ORM\Column(type: 'float')]
     private $prix;
 
@@ -77,16 +75,16 @@ abstract class Produit
     #[ORM\Column(type: 'boolean')]
     private $isEtat=true;
 
-    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ProduitCommande::class)]
-    private $produitCommandes;
-
     #[ORM\ManyToOne(targetEntity: Gestionnaire::class, inversedBy: 'produits')]
     private $gestionnaire;
 
-   
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(["detail:read:item"])]
+    private $type;
+    
     public function __construct()
     {
-        $this->produitCommandes = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -108,8 +106,9 @@ abstract class Produit
 
     public function getImage()
     {
+        // dd($this->image);
         
-        return (is_resource($this->image))? base64_encode(stream_get_contents($this->image)):$this->image ;
+        return  utf8_encode(is_resource($this->image)?  base64_encode (stream_get_contents( $this->image)) : $this->image) ;
     }
 
     public function setImage($image): self
@@ -143,47 +142,7 @@ abstract class Produit
         return $this;
     }
 
-    /**
-     * @return Collection<int, ProduitCommande>
-     */
-    public function getProduitCommandes(): Collection
-    {
-        return $this->produitCommandes;
-    }
 
-    public function addProduitCommande(ProduitCommande $produitCommande): self
-    {
-        if (!$this->produitCommandes->contains($produitCommande)) {
-            $this->produitCommandes[] = $produitCommande;
-            $produitCommande->setProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduitCommande(ProduitCommande $produitCommande): self
-    {
-        if ($this->produitCommandes->removeElement($produitCommande)) {
-            // set the owning side to null (unless already changed)
-            if ($produitCommande->getProduit() === $this) {
-                $produitCommande->setProduit(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getGestionnaire(): ?Gestionnaire
-    {
-        return $this->gestionnaire;
-    }
-
-    public function setGestionnaire(?Gestionnaire $gestionnaire): self
-    {
-        $this->gestionnaire = $gestionnaire;
-
-        return $this;
-    }
 
 
     /**
@@ -205,4 +164,30 @@ abstract class Produit
 
         return $this;
     }
+
+
+    public function getGestionnaire(): ?Gestionnaire
+    {
+        return $this->gestionnaire;
+    }
+
+    public function setGestionnaire(?Gestionnaire $gestionnaire): self
+    {
+        $this->gestionnaire = $gestionnaire;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
 }

@@ -2,31 +2,59 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ZoneRepository;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ZoneRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        "get" => [
+            'method' => 'get',
+            'status' => Response::HTTP_OK,
+            'normalization_context' => ['groups' => ['zone:read:simple']],
+        ],
+        "post" => [
+            'denormalization_context' => ['groups' => ['zone:write']]
+        ]
+    ],
+    itemOperations: [
+        "get" => [
+
+            'normalization_context' => ['groups' => ['zone:read:all']],
+        ],
+        "put" => [
+            "security" => "is_granted('ROLE_GESTIONNAIRE')",
+            "security_message" => "Vous n'avez pas access à cette Ressource",
+            'normalization_context' => ['groups' => ['zone:read:all']]
+        ]
+    ]
+)]
 class Zone
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["zone:read:simple", "zone:read:all" , "zone:write"])]
     private $id;
 
+    #[Groups(["zone:read:simple", "zone:read:all" , "zone:write"])]
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
 
+    #[Groups(["zone:read:simple", "zone:read:all",  "zone:write"])]
     #[ORM\Column(type: 'integer')]
     private $prix;
 
     #[ORM\OneToMany(mappedBy: 'zone', targetEntity: Commande::class)]
     private $commandes;
 
-    #[ORM\OneToMany(mappedBy: 'zone', targetEntity: Quartiers::class)]
+    #[Groups(["zone:read:simple", "zone:read:all", "zone:write"])]
+    #[ORM\OneToMany(mappedBy: 'zone', targetEntity: Quartiers::class  ,  cascade:['persist'] )]
     private $quartiers;
 
     public function __construct()

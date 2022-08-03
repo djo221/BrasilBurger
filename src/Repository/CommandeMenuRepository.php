@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Catalogues;
+use App\Entity\CommandeMenu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Catalogues>
+ * @extends ServiceEntityRepository<CommandeMenu>
  *
- * @method Catalogues|null find($id, $lockMode = null, $lockVersion = null)
- * @method Catalogues|null findOneBy(array $criteria, array $orderBy = null)
- * @method Catalogues[]    findAll()
- * @method Catalogues[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method CommandeMenu|null find($id, $lockMode = null, $lockVersion = null)
+ * @method CommandeMenu|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CommandeMenu[]    findAll()
+ * @method CommandeMenu[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CataloguesRepository extends ServiceEntityRepository
+class CommandeMenuRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Catalogues::class);
+        parent::__construct($registry, CommandeMenu::class);
     }
 
-    public function add(Catalogues $entity, bool $flush = false): void
+    public function add(CommandeMenu $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class CataloguesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Catalogues $entity, bool $flush = false): void
+    public function remove(CommandeMenu $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class CataloguesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Catalogues[] Returns an array of Catalogues objects
+//     * @return CommandeMenu[] Returns an array of CommandeMenu objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class CataloguesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Catalogues
+//    public function findOneBySomeField($value): ?CommandeMenu
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

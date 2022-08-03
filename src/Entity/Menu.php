@@ -19,10 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
         "get" => [
             'method' => 'get',
             'status' => Response::HTTP_OK,
-            'normalization_context' => ['groups' => ['menu:read']],
+            'normalization_context' => ['groups' => ['menu:read:collection']],
         ],
         "post" => [
-            'denormalization_context' => ['groups' => ['menu:write']],
+            'denormalization_context' => ['groups' => ['menu:write:collection']],
             'normalization_context' => ['groups' => ['menu:write:all']]
         ]
     ],
@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         "get" => [
              'method' => 'get',
             'requirements' => ['id' => '\d+'],
-            'normalization_context' => ['groups' => ['menu:read:details']], 
+            'normalization_context' => ['groups' => ['menu:read:item']], 
         ],
         "put" => [
             "security" => "is_granted('ROLE_GESTIONNAIRE')",
@@ -42,8 +42,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 )] 
 class Menu extends Produit
 {
-    #[Groups(["menu:write"])]
-    private $nom;
 
     #[Assert\Valid()]
     #[Assert\Count(
@@ -51,16 +49,21 @@ class Menu extends Produit
         minMessage: 'Il faut avoir au moins un Burger dans le Menu',
         )]
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuBurger::class , cascade:['persist'])]
-    #[Groups(["menu:write"])]
+    #[Groups(["menu:write:collection","detail:read:item" ])]
     private $menuBurgers;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuTaille::class ,  cascade:['persist'])]
-   #[Groups(["menu:write"])]
+   #[Groups(["menu:write:collection","detail:read:item" ])]
     private $menuTailles;
 
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuPortion::class, cascade:['persist'])]
-    #[Groups(["menu:write"])]
+    #[Groups(["menu:write:collection","detail:read:item" ])]
     private $menuPortions;
+
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: CommandeMenu::class  , cascade:['persist'])]
+    private $commandeMenus;
+
+
 
 
     public function __construct()
@@ -68,6 +71,9 @@ class Menu extends Produit
         $this->menuBurgers = new ArrayCollection();
         $this->menuTailles = new ArrayCollection();
         $this->menuPortions = new ArrayCollection();
+        $this->commandeMenus = new ArrayCollection();
+        $this->type='menu';
+
     }
 
     /**
@@ -159,4 +165,35 @@ class Menu extends Produit
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, CommandeMenu>
+     */
+    public function getCommandeMenus(): Collection
+    {
+        return $this->commandeMenus;
+    }
+
+    public function addCommandeMenu(CommandeMenu $commandeMenu): self
+    {
+        if (!$this->commandeMenus->contains($commandeMenu)) {
+            $this->commandeMenus[] = $commandeMenu;
+            $commandeMenu->setMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeMenu(CommandeMenu $commandeMenu): self
+    {
+        if ($this->commandeMenus->removeElement($commandeMenu)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeMenu->getMenu() === $this) {
+                $commandeMenu->setMenu(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
